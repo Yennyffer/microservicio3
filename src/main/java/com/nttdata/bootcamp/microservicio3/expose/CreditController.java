@@ -2,6 +2,7 @@ package com.nttdata.bootcamp.microservicio3.expose;
 
 import com.nttdata.bootcamp.microservicio3.model.Credit;
 import com.nttdata.bootcamp.microservicio3.model.Customer;
+import com.nttdata.bootcamp.microservicio3.model.dto.CreditDto;
 import com.nttdata.bootcamp.microservicio3.business.CreditService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -46,34 +47,34 @@ public class CreditController {
   @Autowired
   private CreditService creditService;
 
-  @GetMapping("/api/customer")
+  @GetMapping("/api/v1/customer/{id}")
   public Flux<Customer> getCustomer() {
     log.info("byCustomerAll>>>>>");
     return creditService.findCustomerAll();
   }
    
   
-  @GetMapping("/api/credit/{id}")
+  @GetMapping("/api/v1/credit/{id}")
   public Mono<Credit> byId(@PathVariable("id") String id) {
     log.info("byId>>>>>");
     return creditService.findById(id);
   }
   
-  @GetMapping("/api/credits-all")
+  @GetMapping("/api/v1/credits-all")
   public Flux<Credit> findAll() {
     log.info("findAll>>>>>");
 
     return creditService.findAll();
   }
 
-  @PostMapping("/api/credit/create")
+  @PostMapping("/api/v1/credit/")
   @ResponseStatus(HttpStatus.CREATED)
-  public Mono<Credit> create(@RequestBody Credit credit) {
+  public Mono<Credit> create(@RequestBody CreditDto creditDTO) {
     log.info("create>>>>>");
-    return creditService.create(credit);
+    return creditService.create(creditDTO);
   }
 
-  @PutMapping("/api/credit/update")
+  @PutMapping("/api/v1/credit/")
   public Mono<ResponseEntity<Credit>> update(@RequestBody Credit credit) {
     log.info("update>>>>>");
     return creditService.update(credit)
@@ -81,7 +82,7 @@ public class CreditController {
         .switchIfEmpty(Mono.just(ResponseEntity.notFound().build()));
   }
 
-  @PatchMapping("/api/credits")
+  @PatchMapping("/api/v1/credits")
   public Mono<ResponseEntity<Credit>> change(@RequestBody Credit credit) {
     log.info("change>>>>>");
     return creditService.change(credit)
@@ -89,7 +90,7 @@ public class CreditController {
         .switchIfEmpty(Mono.just(ResponseEntity.notFound().build()));
   }
 
-  @DeleteMapping("/api/credits/{id}")
+  @DeleteMapping("/api/v1/credits/{id}")
   public Mono<ResponseEntity<Credit>> delete(@PathVariable("id") String id) {
     log.info("delete>>>>>");
     return creditService.remove(id)

@@ -2,6 +2,8 @@ package com.nttdata.bootcamp.microservicio3.business;
 
 import com.nttdata.bootcamp.microservicio3.model.Credit;
 import com.nttdata.bootcamp.microservicio3.model.Customer;
+import com.nttdata.bootcamp.microservicio3.model.dto.CreditDto;
+
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
@@ -25,7 +27,7 @@ import reactor.core.publisher.Mono;
 
 public interface CreditService {
 
-    Mono<Credit> create(Credit credit);
+    Mono<Credit> create(CreditDto creditDTO);
   
     Mono<Credit> findById(String creditId);
   
@@ -38,6 +40,11 @@ public interface CreditService {
     Mono<Credit> remove(String creditId);
     
     Flux<Customer> findCustomerAll();
+    
+    Mono<Customer> findByIdCustomerService(String id);
+    
+    Flux<Credit> findByCustomerId(String id);
+    
   
   }
   

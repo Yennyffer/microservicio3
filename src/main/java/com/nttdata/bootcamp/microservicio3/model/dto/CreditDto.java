@@ -1,18 +1,17 @@
-package com.nttdata.bootcamp.microservicio3.model;
+package com.nttdata.bootcamp.microservicio3.model.dto;
 
-import java.util.Date;
-import java.util.UUID;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
+import java.util.Date;
+
+import com.nttdata.bootcamp.microservicio3.model.CreditType;
+import com.nttdata.bootcamp.microservicio3.model.Customer;
 
 /**
  * [Description]. <br/>
- * <b>Class</b>: {@link Credit}<br/>
+ * <b>Class</b>: {@link CreditDto}<br/>
  * <b>Copyright</b>: &Copy; 2022 NTT DATA SAC. <br/>
  * <b>Company</b>: NTT DATA SAC. <br/>
  *
@@ -30,23 +29,17 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
-@Slf4j
-@Document(collection = "credit")
-
-public class Credit {
-	@Id
-    private String id = UUID.randomUUID().toString();
+@AllArgsConstructor
+public class CreditDto {
+	private String customerId;
+    private Double creditLimit;
+    private Date paymentDate;
     private String cardNumber;
     private String cvv;
     private int month;
     private int year;
-    private double creditLimit;
-    private Date paymentDate;
     private String status;
     private double amountAvailable;
     private double amountConsumed;
-    private Customer customer;
-    private CreditType creditType;
 }
