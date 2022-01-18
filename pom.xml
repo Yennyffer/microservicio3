@@ -16,7 +16,7 @@
 	<properties>
 		<java.version>11</java.version>
 		<spring-cloud.version>2021.0.0</spring-cloud.version>
-		<sonar.organization>ylizana</sonar.organization>
+		<sonar.organization>izana16</sonar.organization>
 	    <sonar.host.url>https://sonarcloud.io</sonar.host.url>
 	    <maven-pmd-plugin.version>3.12.0</maven-pmd-plugin.version>
 	    <checkstyle.version>8.40</checkstyle.version>
@@ -132,13 +132,13 @@
           <excludes>com/nttdata/bootcamp/*/model/thirdparty/**/*</excludes>
         </configuration>
         <executions>
-          <!--<execution>
+          <execution>
             <id>validate</id>
             <phase>validate</phase>
             <goals>
               <goal>check</goal>
             </goals>
-          </execution>-->
+          </execution>
         </executions>
       </plugin>
 
