@@ -3,8 +3,8 @@ package com.nttdata.bootcamp.microservicio3.expose;
 import com.nttdata.bootcamp.microservicio3.model.Credit;
 import com.nttdata.bootcamp.microservicio3.model.Customer;
 import com.nttdata.bootcamp.microservicio3.model.dto.CreditDto;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import com.nttdata.bootcamp.microservicio3.business.CreditService;
-
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -46,6 +46,8 @@ public class CreditController {
 
   @Autowired
   private CreditService creditService;
+  private static final String CREDIT_DELETE =  "DeleteCredit";
+  private static final String CREDIT_UPDATE =  "UpdateCredit";
 
   @GetMapping("/api/v1/customer/{id}")
   public Flux<Customer> getCustomer() {
@@ -74,6 +76,7 @@ public class CreditController {
     return creditService.create(creditDTO);
   }
 
+  @CircuitBreaker(name=CREDIT_UPDATE, fallbackMethod="fallbackUpdateCredit")
   @PutMapping("/api/v1/credit/")
   public Mono<ResponseEntity<Credit>> update(@RequestBody Credit credit) {
     log.info("update>>>>>");
@@ -90,6 +93,7 @@ public class CreditController {
         .switchIfEmpty(Mono.just(ResponseEntity.notFound().build()));
   }
 
+  @CircuitBreaker(name=CREDIT_DELETE, fallbackMethod="fallbackDeleteCredit")
   @DeleteMapping("/api/v1/credits/{id}")
   public Mono<ResponseEntity<Credit>> delete(@PathVariable("id") String id) {
     log.info("delete>>>>>");
@@ -97,5 +101,13 @@ public class CreditController {
         .flatMap(credit -> Mono.just(ResponseEntity.ok(credit)))
         .switchIfEmpty(Mono.just(ResponseEntity.notFound().build()));
   }
+  
+  public Mono<ResponseEntity<String>> fallbackUpdateCredit(@RequestBody Credit credit,RuntimeException ex) {
+	  return Mono.just(ResponseEntity.ok().body("Actualizando credito: "+ credit.getCardNumber()+ "Servicio no disponible."));
+  }
+  
+  public Mono<ResponseEntity<String>> fallbackDeleteCredit(@PathVariable("id") String id, RuntimeException ex) {
+	    return Mono.just(ResponseEntity.ok().body("Se buscó el id: " + id + " Servicio no disponible."));
+ }
   
 }
