@@ -62,7 +62,7 @@ public class CreditController {
     return creditService.findById(id);
   }
   
-  @GetMapping("/api/v1/credits-all")
+  @GetMapping("/api/v1/credit/all")
   public Flux<Credit> findAll() {
     log.info("findAll>>>>>");
 
@@ -85,7 +85,7 @@ public class CreditController {
         .switchIfEmpty(Mono.just(ResponseEntity.notFound().build()));
   }
 
-  @PatchMapping("/api/v1/credits")
+  @PatchMapping("/api/v1/credit")
   public Mono<ResponseEntity<Credit>> change(@RequestBody Credit credit) {
     log.info("change>>>>>");
     return creditService.change(credit)
@@ -94,7 +94,7 @@ public class CreditController {
   }
 
   @CircuitBreaker(name=CREDIT_DELETE, fallbackMethod="fallbackDeleteCredit")
-  @DeleteMapping("/api/v1/credits/{id}")
+  @DeleteMapping("/api/v1/credit/{id}")
   public Mono<ResponseEntity<Credit>> delete(@PathVariable("id") String id) {
     log.info("delete>>>>>");
     return creditService.remove(id)

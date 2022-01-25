@@ -28,10 +28,10 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CreditType {
-	private String id;
+	private String codigo;
 	private String description;
 	private int amountCredits;
-	private boolean isActive;
+	private String status;
 	
 }
 

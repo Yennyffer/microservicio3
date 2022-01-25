@@ -1,5 +1,6 @@
 package com.nttdata.bootcamp.microservicio3.model;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.UUID;
 import lombok.AllArgsConstructor;
@@ -43,7 +44,7 @@ public class Credit {
     private int month;
     private int year;
     private double creditLimit;
-    private Date paymentDate;
+    private LocalDate paymentDate;
     private String status;
     private double amountAvailable;
     private double amountConsumed;
